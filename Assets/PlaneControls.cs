@@ -29,6 +29,8 @@ public class PlaneControls : MonoBehaviour
     //  consider it a valid input
     const float CONTROLLER_AXIS_TOLERANCE = 0.1f;
 
+    const int NUM_SEC_TO_RESPAWN_SPHERES = 1; //The number of seconds to wait before respawning sphere targets
+
     // Use this for initialization
     void Start()
     {
@@ -51,7 +53,11 @@ public class PlaneControls : MonoBehaviour
             GameObject struckObject = ShootLaser();
             if (struckObject != null)
             {
-                struckObject.SetActive(false);
+                TargetManager targetManager = struckObject.GetComponent<TargetManager>();
+                if(targetManager != null)
+                {
+                    targetManager.KillAndRespawnTarget(NUM_SEC_TO_RESPAWN_SPHERES);
+                }
             }
         }
 
@@ -221,4 +227,7 @@ public class PlaneControls : MonoBehaviour
         return struckObject;
     }
 
+
+
 }
+
